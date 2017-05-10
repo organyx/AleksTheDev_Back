@@ -16,7 +16,8 @@ app.use(bodyParser.json({
 // api routes v1
 app.use('/api/v1', routes)
 
-app.server.listen(process.env.port || config.port)
+// app.server.listen(process.env.port || config.port)
+app.server.listen(config.port)
 console.log("Started on port " + app.server.address().port)
 
 export default app

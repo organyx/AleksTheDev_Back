@@ -11,7 +11,7 @@ export default({ config, db }) => {
     api.get('/', (req, res) => {
         Project.find({}, (err, projects) => {
             if(err)
-                res.send(err)
+                res.status(500).send(err)
             res.json(projects)
         })
     })
@@ -19,8 +19,14 @@ export default({ config, db }) => {
     // '/v1/projects/:id' - GET a specific project
     api.get('/:id', (req, res) => {
         Project.findById(req.params.id, (err, project) => {
-            if(err)
-                res.send(err)
+            if(err) {
+                res.status(500).send(err)
+                return
+            }
+            if(project === null) {
+                res.status(404).send('Project not found')
+                return
+            }
             res.json(project)
         })
     })
@@ -33,9 +39,10 @@ export default({ config, db }) => {
         newProject.description = req.body.description
         newProject.imgsUrls = req.body.imgsUrls
 
+        console.log(newProject)
         newProject.save((err) => {
             if(err)
-                res.send(err)
+                res.status(500).send(err)
             res.json({ response: `Project ${newProject.name} saved succesfully` })
         })
     })
@@ -43,15 +50,21 @@ export default({ config, db }) => {
     // '/v1/projects/:id' - PUT - update an existing project
     api.put('/:id', (req, res) => {
         Project.findById(req.params.id, (err, project) => {
-            if(err)
-                res.send(err)
+            if(err) {
+                res.status(500).send(err)
+                return
+            }
+            if(project === null) {
+                res.status(404).send('Project not found')
+                return
+            }
             project.name = req.body.name
             project.status = req.body.status
             project.description = req.body.description
             project.imgsUrls = req.body.imgsUrls
             project.save((err) => {
                 if(err)
-                    res.send(err)
+                    res.status(500).send(err)
                 res.json({ response: `Project ${project.name} information updated`})
             })
         })
@@ -59,11 +72,6 @@ export default({ config, db }) => {
 
 	// '/v1/foodtruck/:id' - DELETE remove a project
     api.delete('/:id', (req, res) => {
-		// Project.remove({_id: req.params.id}, (err, project) => {
-		// 	if(err)
-		// 		res.send(err)
-		// 	res.json({ response: `Project ${project.name} was removed`})
-		// })
         Project.findById(req.params.id, (err, project) => {
             if(err) {
                 res.status(500).send(err)
@@ -81,7 +89,6 @@ export default({ config, db }) => {
                 }
                 res.json({ response: `Project ${deletedPrj} was removed`})
             })
-                
         })
     })
 

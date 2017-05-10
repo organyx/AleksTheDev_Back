@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
 
-let Schema = mongoose.Schema;
+let Schema = mongoose.Schema
 
 let ProjectSchema = new Schema({
     name: {
@@ -16,8 +16,9 @@ let ProjectSchema = new Schema({
         required: true
     },
     imgsUrls: {
-        type: [String]
+        type: [String],
+        required: true
     }
-});
+})
 
-module.exports = mongoose.model('Project', ProjectSchema);
+module.exports = mongoose.model('Project', ProjectSchema)
