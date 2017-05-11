@@ -13,6 +13,7 @@ export default({ config, db }) => {
             if(err)
                 res.status(500).send(err)
             res.json(projects)
+            console.log('Request for all Projects')
         })
     })
 

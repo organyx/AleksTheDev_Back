@@ -2,6 +2,8 @@ import http from 'http'
 import express from 'express'
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
+import cors from 'cors'
+
 import config from './config'
 import routes from './routes'
 
@@ -12,6 +14,7 @@ app.server = http.createServer(app)
 app.use(bodyParser.json({
     limit : config.bodyLimit
 }))
+app.use(cors())
 
 // api routes v1
 app.use('/api/v1', routes)
