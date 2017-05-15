@@ -16,8 +16,7 @@ let ProjectSchema = new Schema({
         required: true
     },
     imgsUrls: {
-        type: [String],
-        required: true
+        type: [String]
     }
 })
 

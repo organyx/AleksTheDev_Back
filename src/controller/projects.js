@@ -29,6 +29,7 @@ export default({ config, db }) => {
                 return
             }
             res.json(project)
+            console.log('Request for project: ' + project)
         })
     })
 
@@ -46,6 +47,7 @@ export default({ config, db }) => {
                 res.status(500).send(err)
             res.json({ response: `Project ${newProject.name} saved succesfully` })
         })
+        console.log(`Project ${newProject.name} saved succesfully`)
     })
 
     // '/v1/projects/:id' - PUT - update an existing project
@@ -68,6 +70,7 @@ export default({ config, db }) => {
                     res.status(500).send(err)
                 res.json({ response: `Project ${project.name} information updated`})
             })
+            console.log(`Project ${project.name} information updated`)
         })
     })
 
@@ -90,6 +93,7 @@ export default({ config, db }) => {
                 }
                 res.json({ response: `Project ${deletedPrj} was removed`})
             })
+            console.log(`Project ${deletedPrj} was removed`)
         })
     })
 
