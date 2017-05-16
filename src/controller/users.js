@@ -25,11 +25,11 @@ export default({ config, db }) => {
                 message: 'User created',
                 obj: result
             })
-            console.log(`User ${user.name} created succesfully`)
+            console.log(`User ${user.email} created succesfully`)
         })
     })
 
-    router.post('/signin', (req, res) => {
+    router.post('/login', (req, res) => {
         User.findOne({ email: req.body.email }, (err, user) => {
             if(err) {
                 return res.status(500).json({
@@ -55,7 +55,7 @@ export default({ config, db }) => {
                 token: token,
                 userId: user._id
             })
-            console.log(`User ${user.name} logged in succesfully`)
+            console.log(`User ${user.email} logged in succesfully`)
         })
     })
 
