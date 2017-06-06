@@ -18,9 +18,14 @@
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
     "jsonwebtoken": "^7.4.0",
+    "lodash": "^4.17.4",
     "mongoose": "^4.9.8",
     "mongoose-unique-validator": "^1.0.5",
-    "path": "^0.12.7"
+    "morgan": "^1.8.2",
+    "passport": "^0.3.2",
+    "passport-jwt": "^2.2.1",
+    "path": "^0.12.7",
+    "validator": "^7.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",

@@ -3,6 +3,7 @@ import express from 'express'
 import config from '../config'
 import mongodb from '../db'
 import middleware from '../middleware'
+import auth from '../middleware/auth'
 import projects from '../controller/projects'
 import users from '../controller/users'
 

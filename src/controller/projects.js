@@ -1,6 +1,8 @@
 import mongoose from 'mongoose'
 import { Router } from 'express'
 import bodyParser from 'body-parser'
+import jwt from 'jsonwebtoken'
+import passport from 'passport'
 
 import Project from '../model/project'
 
@@ -34,7 +36,7 @@ export default({ config, db }) => {
     })
 
     // '/v1/projects/new' - POST add new project    
-    api.post('/new', (req, res) => {
+    api.post('/new', passport.authenticate('jwt', { session: false }), (req, res) => {
         let newProject = new Project()
         newProject.name = req.body.name
         newProject.status = req.body.status
@@ -51,7 +53,7 @@ export default({ config, db }) => {
     })
 
     // '/v1/projects/:id' - PUT - update an existing project
-    api.put('/:id', (req, res) => {
+    api.put('/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
         Project.findById(req.params.id, (err, project) => {
             if(err) {
                 res.status(500).send(err)
@@ -75,7 +77,7 @@ export default({ config, db }) => {
     })
 
 	// '/v1/foodtruck/:id' - DELETE remove a project
-    api.delete('/:id', (req, res) => {
+    api.delete('/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
         Project.findById(req.params.id, (err, project) => {
             if(err) {
                 res.status(500).send(err)
@@ -96,6 +98,29 @@ export default({ config, db }) => {
             console.log(`Project ${deletedPrj} was removed`)
         })
     })
+
+    function checkAuth(req, res, next) {
+        if(!req.header('authorization')) {
+            return res.status(401).send({ response: 'Unatuhorized request. Missing Auth Header' })
+        }
+
+        let token = req.header('authorization').split(' ')[1]
+        let payload = jwt.decode(token, config.secrets.jwtSecret)
+
+        if(!payload) {
+            return res.status(401).send({ response: 'Unatuhorized request. Auth Header is Invalid' })
+        }
+        console.log(`Payload ${payload}`)
+        req.user = payload
+        next()
+    }
+
+    function checkAuth2(req, res, next) {
+        passport.authenticate('jwt', { session: false }, (req, res) => {
+            res.json('Logged In')
+        })
+        next()
+    }
 
     return api
 }
