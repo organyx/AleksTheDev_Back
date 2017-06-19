@@ -9,13 +9,15 @@ import Project from '../model/project'
 export default({ config, db }) => {
     let api = Router()
 
+    const log = config.log()
+
     // '/v1/projects' - GET all projects
     api.get('/', (req, res) => {
         Project.find({}, (err, projects) => {
             if(err)
                 res.status(500).send(err)
             res.json(projects)
-            console.log('Request for all Projects')
+            log.info('Request for all Projects')
         })
     })
 
@@ -31,7 +33,7 @@ export default({ config, db }) => {
                 return
             }
             res.json(project)
-            console.log('Request for project: ' + project)
+            log.info('Request for project: ' + project)
         })
     })
 
@@ -43,13 +45,13 @@ export default({ config, db }) => {
         newProject.description = req.body.description
         newProject.imgsUrls = req.body.imgsUrls
 
-        console.log(newProject)
+        log.info(newProject)
         newProject.save((err) => {
             if(err)
                 res.status(500).send(err)
             res.json({ response: `Project ${newProject.name} saved succesfully` })
         })
-        console.log(`Project ${newProject.name} saved succesfully`)
+        log.info(`Project ${newProject.name} saved succesfully`)
     })
 
     // '/v1/projects/:id' - PUT - update an existing project
@@ -72,7 +74,7 @@ export default({ config, db }) => {
                     res.status(500).send(err)
                 res.json({ response: `Project ${project.name} information updated`})
             })
-            console.log(`Project ${project.name} information updated`)
+            log.info(`Project ${project.name} information updated`)
         })
     })
 
@@ -95,7 +97,7 @@ export default({ config, db }) => {
                 }
                 res.json({ response: `Project ${deletedPrj} was removed`})
             })
-            console.log(`Project ${deletedPrj} was removed`)
+            log.info(`Project ${deletedPrj} was removed`)
         })
     })
 
@@ -110,7 +112,7 @@ export default({ config, db }) => {
         if(!payload) {
             return res.status(401).send({ response: 'Unatuhorized request. Auth Header is Invalid' })
         }
-        console.log(`Payload ${payload}`)
+        log.info(`Payload ${payload}`)
         req.user = payload
         next()
     }

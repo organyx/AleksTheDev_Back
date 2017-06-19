@@ -16,6 +16,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.17.1",
+    "bunyan": "^1.8.10",
     "express": "^4.15.2",
     "jsonwebtoken": "^7.4.0",
     "lodash": "^4.17.4",
