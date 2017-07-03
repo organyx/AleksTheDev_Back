@@ -10,10 +10,10 @@ let router = express()
 //Connect to DB
 mongodb(db => {
 
-    // internal middleware
+    // Connect internal middleware
     router.use(middleware({ config, db }))
 
-    // api routes v1 
+    // API routes v1 
     router.use('/projects', projects({ config, db }))
     router.use('/users', users({ config, db }))
 })

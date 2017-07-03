@@ -9,7 +9,7 @@ const log = config.log()
 let app = express()
 app.server = http.createServer(app)
 
-// api routes v1
+// API routes v1
 app.use('/api/v1', routes)
 
 app.server.listen(process.env.port || config.port)

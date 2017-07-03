@@ -10,7 +10,7 @@ const log = {
     test: () => {
         return bunyan.createLogger({ name: 'AleksTheDev-test', level: 'fatal' })
     }
-};
+}
 
 export default {
     'port' : 3000,
