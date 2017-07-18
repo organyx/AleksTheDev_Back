@@ -51,7 +51,7 @@ export default({ config, db }) => {
         newProject.name = req.body.name
         newProject.status = req.body.status
         newProject.description = req.body.description
-        newProject.imgsUrls = req.body.imgsUrls
+        newProject.imgsUrls = req.body.imageUrls
 
         log.info(newProject)
         // Save new Project
@@ -83,7 +83,7 @@ export default({ config, db }) => {
             project.name = req.body.name
             project.status = req.body.status
             project.description = req.body.description
-            project.imgsUrls = req.body.imgsUrls
+            project.imgsUrls = req.body.imageUrls
             // Save updated project
             project.save((err) => {
                 // Check for error : 500
